@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    {% if user.is_authenticated %}
+        {% for post in object_list %}
+        <div class="post-entry">
+            <h2><a href="{% url 'post_detail' post.pk %}">{{ post.title }}</a></h2>
+            <p>{{ post.summary}}</p>
+        </div>
+        {% endfor %}
+    {% else %}
+        <p>Iltimos oldin tizimga kiring! <a href="{% url 'login' %}">Kirish</a></p>
+    {% endif %}
+{% endblock content %}

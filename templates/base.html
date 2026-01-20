@@ -1,0 +1,44 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="{% static 'css/base.css' %}?v=1.0" />
+    <title>RD | Blog</title>
+  </head>
+  <body>
+    <header>
+      <h1>
+        <a href="{% url 'home' %}"> RD | Blog </a>
+      </h1>
+      <h2>
+        {% if user.is_authenticated %}
+        <a href="{% url 'post_new' %}" style="color: black"
+          >Yangi post yozish</a
+        >
+        {% endif %}
+      </h2>
+      {% if user.is_authenticated %}
+      <div class="nav-links">
+        <span>Xush kelibsiz, {{ user.username | title }}!</span>
+        <form method="post" action="{% url 'logout' %}" style="display: inline">
+          {% csrf_token %}
+          <button
+            type="submit"
+            style="background: rgba(252, 44, 44, 0.79); color: white"
+          >
+            Chiqish
+          </button>
+        </form>
+      </div>
+      {% else %}
+      <div class="nav-links">
+        <a href="{% url 'login' %}" style="color: black">Saytga kirish</a>
+        <a href="{% url 'signup' %}" style="color: black">Ro'yxatdan o'tish</a>
+      </div>
+      {% endif %}
+    </header>
+    <section>{% block content %} {% endblock content %}</section>
+  </body>
+</html>
